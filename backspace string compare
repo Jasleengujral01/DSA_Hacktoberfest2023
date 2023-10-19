@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+#include <stack>
+
+class Solution {
+public:
+    bool backspaceCompare(std::string S, std::string T) {
+        return build(S) == build(T);
+    }
+
+    std::string build(std::string S) {
+        std::stack<char> ans;
+        for (char c : S) {
+            if (c != '#') {
+                ans.push(c);
+            } else if (!ans.empty()) {
+                ans.pop();
+            }
+        }
+        std::string result;
+        while (!ans.empty()) {
+            result = ans.top() + result;
+            ans.pop();
+        }
+        return result;
+    }
+};
+
+int main() {
+    Solution solution;
+    std::string s1 = "ab#c";
+    std::string s2 = "ad#c";
+
+    bool result = solution.backspaceCompare(s1, s2);
+    std::cout << (result ? "True" : "False") << std::endl;
+
+    return 0;
+}
